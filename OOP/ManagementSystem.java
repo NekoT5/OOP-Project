@@ -1,7 +1,15 @@
 package OOP;
 import java.util.*;
 
-public class ManagementSystem {
+interface Manageable {
+    void addStudent(Student student);
+    void addCourse(Course course);
+    List<Student> getStudents();
+    List<Course> getCourses();
+    void inputScore(String studentId, String courseId, double midGrade, double finalGrade);
+}
+
+public class ManagementSystem implements Manageable {
     private String name;
     private String id;
     private List<Student> students;
@@ -66,13 +74,6 @@ public class ManagementSystem {
         courses.add(course);
         System.out.println("Course " + course.getName() + " added successfully.");
     }
-    
-    // Phương thức thêm đăng ký
-    public void addEnrollment(Student student, Course course) {
-        Enrollment enrollment = new Enrollment(student, course);
-        enrollments.add(enrollment);
-        System.out.println("Enrollment for student " + student.getName() + " in course " + course.getName() + " added successfully.");
-    }
 
     // Phương thức nhập điểm
     public void inputScore(String studentId, String courseId, double midtermScore, double finalScore) {
@@ -86,9 +87,5 @@ public class ManagementSystem {
             }
         }
         System.out.println("Enrollment not found.");    
-    }
-    
-    public void checkPassword(Student student) {
-    	
     }
 }
