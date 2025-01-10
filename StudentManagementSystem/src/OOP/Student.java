@@ -1,5 +1,4 @@
 package OOP;
-
 import java.util.*;
 
 public abstract class Student {
@@ -57,10 +56,6 @@ public abstract class Student {
         return totalCredits == 0 ? 0 : totalScore / totalCredits;
     }
 
-    public void addEnrollment(Enrollment enrollment) {
-        coursesEnrolled.add(enrollment);
-    }
-    
     public void validateGraduation() {    
         // Check conditions for graduation(GPA >= 2.5 + All courses completed)
         if ((calculateGPA() >= 2.5) && (coursesCompleted.containsAll(coursesEnrolled))) {

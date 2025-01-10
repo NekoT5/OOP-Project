@@ -101,7 +101,7 @@ public class ManagementSystem implements Manageable {
             System.out.println("Choose 4 - View Course List");
             System.out.println("Choose 5 - Update Grades");
             System.out.println("Choose 6 - Add list for Part-Time Student");
-            System.out.println("Choose 7 -Exit");
+            System.out.println("Choose 7 - Exit");
 
             System.out.print("Your choice: "); // Get choice
             choice = scanner.nextInt();
@@ -113,7 +113,7 @@ public class ManagementSystem implements Manageable {
                         System.out.println("Enter the student's name: ");
                         String name = scanner.next();  // Assuming name is a single word
                         System.out.println("Enter the student's ID: ");
-                        String Id = scanner.next(); // Assuming ID is a string
+                        String Id = scanner.next().toUpperCase(); // Assuming ID is a string
                         
                         Student newStudent = null;
                         
@@ -125,46 +125,65 @@ public class ManagementSystem implements Manageable {
                         
                         if (newStudent != null) {
                             admin.addStudent(newStudent); // Assuming there's an addStudent method
-                        } 
+                            System.out.println("Student added successfully!");
+                        } else {
+                            System.out.println("Invalid student ID. Student not added.");
+                        }
 
                         System.out.println("Would you like to add another student? (1 - Yes, 2 - No)");
                         subChoice = scanner.nextInt();
-                    } while (subChoice != 1);
+                    } while (subChoice == 1);
                 }
 
                 // Remove Student(not updated)
 
                 case 2 -> { // Add Course
-                    System.out.println("Enter the course name: ");
-                    String courseName = scanner.next();
-                    
-                    System.out.println("Enter the course ID: ");
-                    String courseId = scanner.nextLine();
-                    
-                    System.out.println("Enter credits: ");
-                    int courseCredits = scanner.nextInt();
-                    
-                    System.out.println("Enter midWeight: ");
-                    double courseMW = scanner.nextDouble();
-                    
-                    System.out.println("Enter finalWeight: ");
-                    double courseFW = scanner.nextDouble();                 
-                    
-                    System.out.println("Enter prerequisites: ");
-                    String input = scanner.nextLine();  // Read the entire line of input
-
-                    // Split the input string into an array using \\s+ as consecutive separators
-                    String[] prerequisitesArray = input.split("\\s+");
-
-                    // Convert the array to a List
-                    List<String> coursePreq = new ArrayList<>();
-                    for (String prereq : prerequisitesArray) {
-                        coursePreq.add(prereq.trim());  // Trim any leading/trailing spaces from each course
-                    }
-                    
-                    Course newCourse = new Course(courseId, courseName, courseCredits, coursePreq, courseMW, courseFW);
-                    admin.addCourse(newCourse); // Assuming there's an addCourse method
-                    System.out.println("Course added successfully!");
+                	int choiceC = 0;
+                	do {
+	                    System.out.println("Enter the course name: ");
+	                    String courseName = scanner.next();
+	                    
+	                    System.out.println("Enter the course ID: ");
+	                    String courseId = scanner.next().toUpperCase();
+	                    
+	                    System.out.println("Enter credits: ");
+	                    int courseCredits = scanner.nextInt();
+	                    
+	                    System.out.println("Enter midWeight: ");
+	                    double courseMW = scanner.nextDouble();
+	                    
+	                    System.out.println("Enter finalWeight: ");
+	                    double courseFW = scanner.nextDouble();
+	                    scanner.nextLine();
+	                    
+	                    System.out.println("Enter prerequisites (separate by spaces, e.g., 'MATH101 ENG202 PHYS303'):");
+	                    String prerequisite = scanner.nextLine().toUpperCase(); // Đọc toàn bộ dòng
+	                    
+	                    // Chia danh sách các prerequisite thành mảng
+	                    String[] prerequisitesArray = prerequisite.split("\\s+");	       
+	                    
+	                    // Chuyển mảng thành danh sách
+	                    List<String> coursePreq = new ArrayList<>();
+	                    for (String prereq : prerequisitesArray) {
+	                        if (!prereq.isBlank()) { // Kiểm tra xem chuỗi có rỗng không
+	                            coursePreq.add(prereq.trim());
+	                        }
+	                    }
+	                    
+	                    for (Course course : admin.courses) {
+	                    	if (course.getId().equals(courseId)) {
+	                    		System.out.println("Course existed! Try again");
+	                    		break;
+	                    	}
+	                    	
+                    		Course newCourse = new Course(courseId, courseName, courseCredits, coursePreq, courseMW, courseFW);
+                            admin.addCourse(newCourse); // Assuming there's an addCourse method
+	                    }
+	                    
+	                    System.out.println("Continue?(1 - Yes, 2 = No)");
+	                    choiceC = scanner.nextInt();
+	                    
+                	} while (choiceC == 1);
                 }
                     
                 case 3 -> { // View Student List
@@ -196,7 +215,11 @@ public class ManagementSystem implements Manageable {
                 		System.out.println("Press 2 to exit");
                         viewChoiceC = scanner.nextInt();
                         
-                	} while (viewChoiceC == 1);
+                        if (viewChoiceC == 2) {
+                            System.out.println("Returning to the main menu...");
+                        }
+                        
+                	} while (viewChoiceC != 2);
                 }
                 	
                 case 5 -> {		// Update Grades

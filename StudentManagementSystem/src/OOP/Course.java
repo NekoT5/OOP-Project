@@ -47,5 +47,8 @@ public class Course {
         System.out.println("Course Name: " + name);
         System.out.println("Course ID: " + id);
         System.out.println("Credits: " + credits);
+        System.out.println("Mid Term Weight: " + midtermWeight + " | Final Weight: " + finalWeight);
+        System.out.println("Prerequisites: " + prerequisites);
+        System.out.println();
     }
 }

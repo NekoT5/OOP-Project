@@ -133,13 +133,6 @@ class PartTimeStudent extends Student {
     public PartTimeStudent(String id, String name) {
         super(id, name, "Part-Time Student");
     }
-
-    public void registerCourse(Course course) {
-        Enrollment enrollment = new Enrollment(this, course);
-        addEnrollment(enrollment);
-        System.out.println("Part-time student " + getName() + " has registered for course: " + course.getName());
-    }
-    
 	
     public void DisplayMenu(List<Course> courses) {
     	Scanner scanner = new Scanner(System.in);
